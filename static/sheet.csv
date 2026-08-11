@@ -1,8 +1,8 @@
 theme,background,text,primary_color,accent_color,font_family_heading,font_family_body,font_size_base,title,font_heading_scale,font_heading_weight,font_body_scale,font_body_weight,font_body_style
 bronze,#121212,#FFFFFF,#CD7F32,#2c2c2c,Share Tech,Share Tech,8,BlackHive Security LLC,1.1,400,1,400,normal
 ,,,,,,,,,,,,,
-component,id,header_button_Home,header_button_Mission,header_button_Services,banner_message_1,banner_message_2,banner_message_3,title,cta,cta_url,logo,,
-header,header_01,#hero,#our_mission,#our_services,Protecting What Matters Most,BlackHive Security LLC,Free Security Consultation,BlackHive Security LLC,Get Secured,#contact_card,static/Logo (1).png,,
+component,id,title,cta,cta_url,logo,header_button_Home,header_button_Mission,header_button_Services,banner_message_1,banner_message_2,banner_message_3,,
+header,header_01,BlackHive Security LLC,Get Secured,#contact_card,static/Logo (1).png,#hero,#our_mission,#our_services,Protecting What Matters Most,BlackHive Security LLC,Free Security Consultation,,
 ,,,,,,,,,,,,,
 component,id,tagline,about_text,cta,cta_url,bg_image_url,why_text,cta_body,,,,,
 hero,hero_01,Protecting What Matters Most.,"Professional security solutions for businesses, communities, events, and private clients throughout Arizona. Our trained security professionals provide dependable protection with integrity, vigilance, and professionalism.",Request a Free Consultation,#contact_card,static/3125427-uhd_3840_2160_25fps.mp4,Why Choose BlackHive? ? Licensed & Insured ? Armed & Unarmed Security Officers ? Executive Protection Specialists ? Mobile Patrol Services ? Construction Site Security ? Fire Watch Services ? Event Security ? 24/7 Professional Support,"Ready to Protect Your Business? Contact BlackHive Security today to schedule a free consultation and discover how our professional security services can help protect your people, property, and assets.",,,,,
