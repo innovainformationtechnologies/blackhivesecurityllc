@@ -1,15 +1,20 @@
 <div class="hero_container">
     <div id="hero" class="hero_body">
+            <video id="hero_video" autoplay muted loop></video>
             <h1 class="text1 title">Welcome to Onyx Audio Tech</h1>
-            <p class="text2">A creative hangout for music producers, game devs, graphic designers, and anyone making cool stuff.</p>
-            <div class="cta">
-                <a href="https://discord.gg/hXeFZ4ag" class="btn btn-lg btn-primary">Join Our Discord</a>
+
+            <div class="controls flex row swap">
+                <p class="text2">A creative hangout for music producers, game devs, graphic designers, and anyone making cool stuff.</p>
+                <div class="cta">
+                    <a href="https://discord.gg/hXeFZ4ag" class="btn btn-lg btn-primary hero_button">Join Our Discord</a>
+                </div>
             </div>
     </div>
     <style>
         .hero_container{
-            width: 100%;
-            height: 80vh;
+            max-width: 90vw;
+            height: fit-content;
+            font-size: var(--font_size_base) !important;  
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -17,31 +22,56 @@
             margin: 10vh auto;
         }
         .hero_body{
-            width: 100%;
-            height: 100%;
+            width: fit-content;
+            height: fit-content;
             padding-bottom: 5vh;
             display: flex;
             flex-direction: column;
             justify-content: end;
             align-items: center;
+            &>.title{
+                font-size: 15rem !important;
+                font-weight: bold;  
+                color: var(--text);
+                padding-top: 20vh;
+            }
             &>.cta{
                 margin: 2rem 0;
                 font-weight: lighter;
             }
-            &>.text1{
-                font-size:3rem !important;
-                font-weight: bold;
-                color: var(--primary_color);
-                text-align: center;
-            }
             &>.text2{
-                color: var(--primary_color);
+                color: var(--text);
                 text-align: center;
+                max-width: 80vw;
+            }
+            &>.controls{
+                gap: 2rem;
             }
         }
-        @media screen and (max-width: 1000) {
-            .hero_container{
-                margin-top: 0 !important;
+        #hero_video{
+            position: absolute;
+            top: 0;
+            height: 110vh !important;
+            object-fit: cover;
+            opacity: 0.5;
+        }
+        .hero_button{
+            background-color: transparent !important;
+            &:hover{
+                background-color: var(--primary_color) !important;
+            }
+        }
+        .primary_arrow{
+            color: var(--primary_color);
+        }
+        @media screen and (max-width: 1000px) {
+            .hero_body{
+                max-width: 80vw !important;
+                
+            }
+            .hero_body > .title{
+                /* margin-top: 0vh; */
+                font-size: 7rem !important;
             }
             
         }
@@ -50,16 +80,28 @@
         (function(){
             function init(data){
                 const hero = document.getElementById(`${data.id}`)
-                hero.querySelector(".text1").textContent = data.text1
-                hero.querySelector(".text2").textContent = data.text2
+                hero.querySelector(".text1").textContent = data.tagline
+                hero.querySelector(".text2").textContent = data.about_text
                 hero.querySelector(".cta").querySelector("a").href = data.cta_url
-                hero.querySelector(".cta").querySelector("a").innerText = data.cta
+                hero.querySelector(".cta").querySelector("a").innerHTML = "<span class='primary_arrow'>></span>" + " " +  data.cta 
                 hero.style.setProperty('--font_size_title', `${parseInt(document.body.style.getPropertyValue('--font_size_h1'))*2}px`)
                 console.log(hero.style.getPropertyValue('--font_size_title'))
-                hero.style.backgroundImage = `url(${data.bg_image_url})`
+                
+                let src = data.bg_image_url
+                let srcEl = document.createElement("source")
+                srcEl.src = src
+                let bkg = hero.querySelector("#hero_video")
+                bkg.appendChild(srcEl)
+                bkg.style.width = "100%"
+                bkg.style.height = "100%"
+                bkg.style.objectFit = "cover"
+                bkg.style.position = "absolute"
+                bkg.style.zIndex = "-1"
+                bkg.style.opacity = "0.5"
+
                 hero.style.backgroundSize = "cover"
                 hero.style.backgroundBlendMode = "darken"
-                hero.style.backgroundColor = "rgba(0, 0, 0, 0.45)"
+                // hero.style.backgroundColor = "rgba(0, 0, 0, 0.45)"
                 hero.style.backgroundPosition = "center"
                 hero.style.width = "100vw"
                 hero.style.height = "100%" 

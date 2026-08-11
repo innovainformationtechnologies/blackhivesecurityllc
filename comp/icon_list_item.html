@@ -1,0 +1,54 @@
+<div class="icon_list_item_container">
+    <div class="icon_list_item_body">
+        <img id="icon" src="" alt="">
+        <p class="text"></p>
+    </div>
+    <style>
+        .icon_list_item_container{  
+            opacity: 0;
+            transition: all 0.5s ease-in-out;
+            &.visible{
+                opacity: 1;
+            }
+        }
+        .icon_list_item_body{
+            width: 60vw;
+            height: auto;
+            object-fit: cover;
+            border-radius: 1rem;
+            margin: auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: start;
+            align-items: center;
+            & > img{
+                
+                object-fit: contain;
+            }
+            & > p{
+                font-size: var(--font_size_h2);
+            }
+        }
+    </style>
+    <script>
+        (function(){
+            function init(data){
+                const element = document.getElementById(`${data.id}`)
+                console.log("icon_list_item ", data)
+                element.querySelector("#icon").src = data.icon_url
+                element.querySelector("#icon").style.height = data.icon_height ? data.icon_height : "var(--font_size_h2)"
+                element.querySelector(".text").innerText = data.text
+                element.querySelector(".icon_list_item_body").style.gap = data.gap
+                let offset = window.innerHeight * .9
+                window.addEventListener("scroll", () => {
+                    if (window.scrollY > element.offsetTop - offset) {
+                        element.querySelector(".icon_list_item_container").classList.add("visible")
+                    } else {
+                        element.querySelector(".icon_list_item_container").classList.remove("visible")
+                    }
+                })
+            }
+            window.componentRegistry.register("icon_list_item", init)
+        })()
+    </script>
+</div>

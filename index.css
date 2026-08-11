@@ -13,6 +13,7 @@ html {
 	background-color: var(--background) !important;
 	color: var(--text) !important;
     overflow-x: hidden !important;
+    transition: all 0.5s ease-in-out;
 }
 body {
     max-width: 100% !important;
@@ -44,10 +45,12 @@ h1{
     font-size: var(--font_size_h1) !important;
 }
 h2{
-    font-size: var(--font_size_h2) !important;
+    font-size: var(--font_size_base) !important;
+    color: var(--primary_color);
 }
 h3{
     font-size: var(--font_size_h3) !important;
+    color: var(--accent_color)
 }
 h4{
     font-size: var(--font_size_h4) !important;
@@ -82,23 +85,23 @@ nav, #nav, .navbar-default, .navbar-static-top{
     text-shadow: none;
 }
 .btn-secondary{
-    color: var(--primary_color) !important;
-    background: var(--accent_color);
+    color: var(--text) !important;
+    background: transparent !important;
     font-size: var(--font_size_h3);
     border: none;
     &:hover{
-        background: var(--primary_color);
+        background: var(--primary_color) !important;
         color: var(--accent_color) !important;
     }
 }
 
 .btn-primary{
-    background: var(--primary_color);
-    color: var(--text);
+    background: var(--primary_color) !important;
+    color: var(--text) !important;
     font-size: var(--font_size_h4);
     border: none;
     &:hover{
-        background: var(--accent_color);
+        background: var(--accent_color) !important;
     }
 }
 
@@ -113,9 +116,10 @@ nav, #nav, .navbar-default, .navbar-static-top{
     transform: scale(1.05)
 }
 
-#subfooter{
+#power{
     display: flex;
-    color: var(--text) !important;
+    color: var(--primary_color) !important;
+    font-size: var(--font_size_small);
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -124,11 +128,43 @@ nav, #nav, .navbar-default, .navbar-static-top{
     margin: auto !important;
 }
 
+.flex{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    &.row{
+        flex-direction: row;
+        width: fit-content;
+    }
+    &.column{
+        flex-direction: column;
+        height: fit-content;
+    }
+    &.center{
+        justify-content: center;
+        align-items: center;
+    }
+    &.spread{
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+}
+
 @media screen and (max-width: 1000px){
     #nav{
         display:  none;
     }
     body{
         font-size: var(--font_size_small);
+    }
+    .flex{
+        &.row.swap{
+            flex-direction: column;
+        }
+        &.column.swap{
+            flex-direction: row;
+        }
     }
 }

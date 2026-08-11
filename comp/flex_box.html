@@ -9,6 +9,9 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            &:last-child {
+               align-self: center;
+            }
         }
         .flex_box_body{
             width: 100%;
@@ -40,19 +43,33 @@
                 const element = document.getElementById(`${data.id}`)
                 element.style.display = "flex"
                 element.style.flexWrap = "wrap"
-                element.style.flexDirection = data.flex_direction
+                element.style.flexDirection = data.flex_direction ? data.flex_direction : "row"
                 element.style.justifyContent = "center"
                 element.style.justifyItems = "center"
                 element.style.alignItems = "center"
                 element.style.alignContent = "center"
                 element.style.alignSelf = "center"
                 element.style.gap = data.gap
+                element.style.paddingBottom = "10vh"
                 element.style.margin = "auto"
+                element.style.backgroundColor = data.background_color ? data.background_color : "none"
+                element.style.setProperty("color", data.text_color ? data.text_color : "var(--text)", 'important')
                 
                 window.onresize =() => {
                     // alert("resize")
                     adjustFlexOnWindowResize(element)
                 }
+
+                window.addEventListener("scroll", () => {
+                    const items = element.children;
+
+                    items.forEach((item, index) => {
+                        // Fix the alignment and margins
+                        item.style.alignSelf = 'center';
+                        item.style.margin = 'auto';
+                    })
+                    // Grab all the items in your list
+                })
                 adjustFlexOnWindowResize(element)
             }
 

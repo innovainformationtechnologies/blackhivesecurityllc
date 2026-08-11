@@ -1,10 +1,10 @@
 <div class="title_container">
     <div class="title_body">
-        <h1 class="text1 title">Onyx Audio Tech</h1>
+        <h2 class="text1 title">Onyx Audio Tech</h2>
     </div>
     <style>
         .title_container{
-            width: 100%;
+            width: 90vw;
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -17,11 +17,11 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            justify-content: flex-start;
+            align-items: start;
             &>.title{
-                font-size: var(--font_size_title) !important;
-                text-align: center;
+                font-size: var(--font_size_h2) !important;
+                text-align: start;
             }
         }
     </style>
@@ -29,7 +29,7 @@
         (function(){
             function init(data){
                 const element = document.getElementById(`${data.id}`)
-                element.querySelector(".text1").innerText = data.text1
+                element.querySelector(".text1").innerText = data.title
                 element.style.setProperty('--font_size_title', `${parseInt(document.body.style.getPropertyValue('--font_size_h1'))*1.5}px`)
                 console.log(element.style.getPropertyValue('--font_size_title'))
             }

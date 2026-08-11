@@ -12,25 +12,40 @@ Args: id, title
 	</div>
     <div class="header_body">
 		<img src="" id="logo" alt="">
+		<div id="header_buttons" class="flex row swap"></div>
+		<div class="spacer"></div>
+		<button id="cta" class="btn btn-primary">Schedule Now</button>
     </div>
     <style>
+		#logo{
+			height: 5rem;
+			object-fit: contain;
+		}
 		.header_body{
+			height: fit-content !important;
 			display: flex;
 			flex-direction: row;
 			justify-content: space-between;
-			align-items: center;
+			/* align-items: center; */
 			padding: 1rem;
+			&>#cta{
+				height: fit-content !important;
+				font-size: calc(var(--font_size_base)*1.2);
+			}
 		}
 		.header_container{
 			position: fixed;
 			display: flex;
 			flex-direction: column;
-			background: var(--primary_color);
+			/* background: transparent; */
+			font-size: var(--font_size_base) !important;
 			top: 0px;
 			left: 0;
 			right: 0;
-			width: 100vw;
+			max-width: 100vw;
 			z-index: 100;
+			overflow: 1;
+			transition: all 0.5s ease-in-out;
 		}
 		#banner{
 			width: 100vw;
@@ -38,13 +53,14 @@ Args: id, title
 			flex-direction: row;
 			justify-content: space-between;
 			align-items: center;
-			background: var(--accent_color);
-			color: var(--primary_color);
+			background: black;
+			color: var(--text);
 			padding: 1rem;
+			font-size: var(--font_size_base);
 			&>button{
 				background: none;
 				border: none;
-				font-size: 1.5rem;
+				/* font-size: 1.5rem; */
 				color: var(--primary_color);
 				padding: 1rem 3rem;
 			}
@@ -55,11 +71,64 @@ Args: id, title
 				}
 			}
 		}
+		@media screen and (max-width: 1000px) {
+			#banner{
+				font-size: var(--font_size_small) !important;
+			}
+			.header_container{
+				font-size: var(--font_size_small) !important;
+				/* max-height: 10vh !important; */
+			}
+			.header_body > #cta{
+				font-size: calc(var(--font_size_small)*2) !important;
+			}
+			#header_buttons{
+				display: none;
+				&.visible{
+					display: flex;
+				}
+			}
+		}
     </style>
     <script>
         (function(){
 			let banner_messages = []
 			let current_message = 0
+
+			function get_header_buttons(element, data){
+				Object.keys(data).forEach(key => {
+					// alert("header button ", key)
+					if(key.startsWith("header_button_")){
+						let btn = document.createElement("button")
+						btn.classList.add("header_button", "btn", "btn-secondary")
+						let button_text = key.split("_").slice(2)
+						btn.innerText = button_text.join(" ")
+						btn.onclick = () => {
+							console.log("clicked")
+							window.location.href = data[key]
+						}
+						element.querySelector("#header_buttons").appendChild(btn)
+					}
+					
+				})
+				if (window.innerWidth < 1000) {
+						let menu_button = document.createElement("button")
+						menu_button.classList.add("header_button", "btn", "btn-secondary")
+						menu_button.innerText = "≡"
+						menu_button.onclick = () => {
+							element.querySelector("#header_buttons").classList.toggle("visible")
+							if (element.querySelector("#header_buttons").classList.contains("visible")) {
+								element.querySelector(".header_body").style.backgroundColor = "var(--background)"
+								menu_button.innerText = "x"
+							} else {
+								element.querySelector(".header_body").style.backgroundColor = "transparent"
+								menu_button.innerText = "≡"
+							}
+						}
+						element.querySelector(".header_body").appendChild(menu_button)
+					}
+			}
+
 			function get_banner_messages(element, data){
 				Object.keys(data).forEach(key => {
 					console.log(key)
@@ -90,8 +159,16 @@ Args: id, title
 			}
 
             function init(data){
+				let lastScroll = 0
                 const element = document.getElementById(`${data.id}`)
+				let scroll_counter = 0
 				get_banner_messages(element, data)
+				get_header_buttons(element, data)
+
+				element.querySelector("#cta").innerText = data.cta
+				element.querySelector("#cta").addEventListener("click", () => {
+					window.location.href = data.cta_url
+				})
 
 				element.querySelector("#banner_left").addEventListener("click", () => {
 					next_banner_message(element,-1)
@@ -104,6 +181,42 @@ Args: id, title
 				setInterval(() => {
 					next_banner_message(element,1)
 				}, 5000);
+
+				window.onscroll = () => {
+					let scroll_delta  = window.scrollY - lastScroll
+					
+					if (scroll_delta > 0) {
+						scroll_counter = 0
+						element.querySelector(".header_container").style.opacity -= scroll_delta*.7
+						console.log("going down", scroll_counter)
+					} else {
+						scroll_counter += 1
+						console.log("going up", scroll_counter)
+						if (scroll_counter > 50) {
+							element.querySelector(".header_container").style.opacity -= scroll_delta*1
+						}
+					}
+					if (element.querySelector(".header_container").style.opacity < 0) {
+						element.querySelector(".header_container").style.opacity = 0
+					}
+					if (element.querySelector(".header_container").style.opacity > 1) {
+						element.querySelector(".header_container").style.opacity = 1
+					}
+					if (window.scrollY == 0) {
+						element.querySelector(".header_container").style.opacity = 1
+					}
+					if (window.scrollY > 200) {
+						element.querySelector(".header_body").style.backgroundColor = "var(--background)"
+						// alert("scroll" + window.scrollY)
+					} else {
+						element.querySelector(".header_body").style.backgroundColor = "transparent"
+					}
+					lastScroll = window.scrollY
+				}
+
+				element.querySelector(".header_container").addEventListener("mouseover", () => {
+					element.querySelector(".header_container").style.opacity = 1
+				})
             }
 
             window.componentRegistry.register("header", init)

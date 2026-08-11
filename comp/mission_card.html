@@ -1,0 +1,124 @@
+<div class="mission_card_container">
+    <div id="mission_card" class="mission_card_body">
+        <img class="mission_card_image" src="static/innova_logo.png" alt="service image">
+        <div>
+            <h3 class="text1">Service 1: Website Development</h3>
+            <p class="text2">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet nulla eget elit dictum varius. Maecenas risus mi, porta mattis nulla vitae, ultricies lorem.
+            </p>
+            <div class="cta" hidden>
+                <a class="btn btn-lg btn-secondary" href="mailto:info@example.com">Get in touch</a>
+            </div>
+        </div>
+    </div>
+    <style>
+        .mission_card_container{
+            max-width: fit-content;
+            display: flex;
+            flex-direction: column;
+            justify-content: left;
+            align-items: left;
+            margin: auto auto;
+            border-radius: 1rem;
+            opacity: 0;
+            transition: all 0.5s ease-in-out !important;
+            &:hover{
+                transform: scale(1.05);
+            }
+            &.visible{
+                opacity: 1;
+            }
+        }
+        
+        .mission_card_body{
+            width: 100%;
+            height: 100%;
+            margin: auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            & > * > h3{
+                font-size: 44px !important;
+            }
+            & > * > p{
+                opacity: 80%;
+                width: 40rem;
+                letter-spacing: 0.6px;
+                line-height: 28.8px;
+                font-weight: 200;
+            }
+            & > * > .cta{
+                margin: auto;
+                & > a{
+                    font-size: 18px !important;
+                    border: 1px solid var(--primary_color);
+                    color: var(--primary_color) !important;
+                }
+                & > a:hover{
+                    color: var(--accent_color) !important;
+                    background-color: var(--primary_color);
+                }
+            }
+
+        }
+        .mission_card_image{
+            /* position: relative; */
+            height: 45rem;
+            width: 50rem;
+            object-fit: cover;
+            /* border-radius: 1rem; */
+        }
+        
+        @media screen and (max-width: 1000px) {
+            .mission_card_container{
+                min-width: 80vw !important;
+                max-height: none;
+                max-width: none !important;
+            }
+            .mission_card_body{
+                flex-direction: column !important;
+                & > * > p{
+                    opacity: 80%;
+                    width: 80vw;
+                }
+                & > * > h3{
+                    /* width: 80rem !important; */
+                }
+            }
+            .mission_card_image{
+                height: 40vh;
+                width: 80vw;
+            }
+        }
+    </style>
+    <script>
+        (function(){
+
+            function init(data){
+                console.log("mission_card data ", data)
+                const element = document.getElementById(`${data.id}`)
+                element.querySelector(".text1").innerText = data.text1
+                element.querySelector(".text2").innerText = data.text2
+                element.querySelector(".cta").querySelector("a").href = data.cta_url
+                element.querySelector(".cta").querySelector("a").innerText = data.cta
+                element.querySelector(".mission_card_image").src = data.image_url
+                element.querySelector(".mission_card_body").style.flexDirection = data.flex_direction
+                console.log(window.innerWidth)
+                element.style.width = "100%";
+                let offset = window.innerHeight * .75
+                window.addEventListener("scroll", () => {
+                    if (window.scrollY > element.offsetTop - offset) {
+                        element.querySelector(".mission_card_container").classList.add("visible")
+                    } else {
+                        element.querySelector(".mission_card_container").classList.remove("visible")
+                    }
+                })
+            }
+            
+
+            window.componentRegistry.register("mission_card", init)
+        })()
+    </script>
+</div>
