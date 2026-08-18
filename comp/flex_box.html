@@ -8,17 +8,15 @@ Args: id, flex_direction, gap, background_color, text_color
     <div id="flex_row" class="flex_row_body">
     </div>
     <style>
-        .flex_box_container{
+        .slot > div:has(.flex_row_container):last-child{
             width: 100%;
             height: auto;
             display: none;
-            position: absolute;
+            position: bsolute;
+            visibility: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            &:last-child {
-               align-self: center;
-            }
         }
         .flex_box_body{
             width: 100%;
