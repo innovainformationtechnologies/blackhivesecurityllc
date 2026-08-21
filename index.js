@@ -7,7 +7,7 @@ if (config.debug) {
     buildPage = module.buildPage
   });
 } else {
-  await import ("https://cdn.jsdelivr.net/gh/innovainformationtechnologies/sheetsite-util@main/util.js").then(module => {
+  await import ("https://cdn.jsdelivr.net/gh/innovainformationtechnologies/sheetsite-util@innovainformationtechnologies-patch-5/util.js").then(module => {
     getCSVContents = module.getCSVContents;
     buildPage = module.buildPage
   });
